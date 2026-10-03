@@ -368,3 +368,17 @@ hr { border: 0; border-top: 1px solid var(--mist); margin: 40px 0; }
   .card { border: 0; padding: 0; max-width: none; }
   blockquote, p.comment, table { break-inside: avoid; }
 }
+
+/* Страница-приложение отделяется в оглавлении слабой чертой */
+
+.toc-list li.appendix {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--mist);
+}
+
+.index-list li.appendix {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--mist);
+}
