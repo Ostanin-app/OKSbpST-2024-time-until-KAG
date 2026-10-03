@@ -1,0 +1,370 @@
+/* Оформление сайта «Обзор КР по ОКСбпST».
+   Основа — референс DESIGN.md (монохромный институциональный стиль):
+   светлый холст, белые карточки с волосяной рамкой, радиусы 2px,
+   тёмные полосы, единственный акцент — бледно-лавандовая заливка.
+   Шрифт Inter берётся из системы, внешние запросы не делаются. */
+
+:root {
+  --black: #000000;
+  --obsidian: #1a1a1a;
+  --graphite: #333333;
+  --iron: #5a5a5a;
+  --slate: #666666;
+  --steel: #808080;
+  --fog: #a0a0a0;
+  --ash: #bfbfbf;
+  --mist: #dedfe1;
+  --cloud: #edeff2;
+  --paper: #f7f8fa;
+  --white: #ffffff;
+  --glacier: #e2e7fc;
+  --badge: #6f6f6f;
+
+  --radius: 2px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 32px rgba(0, 0, 0, 0.08);
+
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --card-w: 760px;
+  --rail-w: 220px;
+  --rail-gap: 24px;
+  --topbar-h: 64px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cloud);
+  color: var(--black);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Верхняя панель ---------- */
+
+.topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--mist);
+}
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--black);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.brand:hover { color: var(--graphite); }
+.topbar-meta {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--badge);
+}
+
+/* ---------- Плавающее оглавление слева ---------- */
+
+.toc-rail {
+  position: fixed;
+  top: calc(var(--topbar-h) + 40px);
+  left: 50%;
+  transform: translateX(
+    calc(-1 * (var(--card-w) / 2 + var(--rail-gap) + var(--rail-w)))
+  );
+  width: var(--rail-w);
+  max-height: calc(100vh - var(--topbar-h) - 80px);
+  overflow-y: auto;
+  font-size: 14px;
+}
+.toc-title {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--badge);
+  margin-bottom: 12px;
+}
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list li { margin: 0; }
+.toc-list a {
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  color: var(--iron);
+  text-decoration: none;
+  line-height: 1.35;
+}
+.toc-list a:hover { background: var(--paper); color: var(--black); }
+.toc-list a.current {
+  background: var(--glacier);
+  color: var(--black);
+  font-weight: 500;
+}
+.toc-list .num {
+  color: var(--fog);
+  min-width: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.toc-list a.current .num { color: var(--iron); }
+
+/* Свёрнутое оглавление для узких экранов */
+.toc-inline {
+  display: none;
+  max-width: var(--card-w);
+  margin: 0 auto 24px;
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 0 20px;
+}
+.toc-inline summary {
+  cursor: pointer;
+  padding: 16px 0;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--badge);
+}
+.toc-inline .toc-list { padding-bottom: 16px; }
+
+/* ---------- Основная колонка ---------- */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 16px 80px;
+}
+.card {
+  max-width: var(--card-w);
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 40px 48px 48px;
+}
+
+.crumb {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--badge);
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 32px;
+}
+h2 { font-size: 24px; line-height: 1.3; font-weight: 700; margin: 40px 0 16px; }
+h3 { font-size: 20px; line-height: 1.4; font-weight: 700; margin: 32px 0 12px; }
+
+p { margin: 16px 0; }
+a { color: var(--black); }
+strong { font-weight: 700; }
+
+/* ---------- Три вида текста ---------- */
+
+/* цитата рекомендаций */
+blockquote {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+}
+blockquote p { margin: 8px 0; }
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ul, blockquote ol { margin: 8px 0; padding-left: 20px; }
+
+/* пересказ, не дословно */
+p.retold,
+div.retold {
+  margin: 20px 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--ash);
+  color: var(--graphite);
+}
+div.retold > p:first-child { margin-top: 0; }
+div.retold > p:last-child,
+div.retold > ul:last-child,
+div.retold > ol:last-child { margin-bottom: 0; }
+
+/* комментарий составителя — единственный акцент */
+p.comment {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: var(--glacier);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  font-size: 15px;
+  color: var(--obsidian);
+}
+
+/* ссылка на раздел первоисточника */
+p.ref {
+  margin: -8px 0 24px;
+  font-size: 13px;
+  color: var(--steel);
+}
+
+/* ---------- Таблицы и списки ---------- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+}
+th, td {
+  border: 1px solid var(--mist);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--paper);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--badge);
+}
+td { color: var(--graphite); }
+
+ul, ol { padding-left: 22px; }
+li { margin: 6px 0; }
+
+hr { border: 0; border-top: 1px solid var(--mist); margin: 40px 0; }
+
+/* ---------- Переходы между блоками ---------- */
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--mist);
+}
+.pager a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+  text-decoration: none;
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  background: var(--white);
+  max-width: 45%;
+}
+.pager a:hover { border-color: var(--black); }
+.pager .up { color: var(--iron); }
+.pager span { max-width: 45%; }
+
+/* ---------- Первая страница ---------- */
+
+.hero {
+  background: var(--obsidian);
+  color: var(--white);
+  padding: 72px 16px 64px;
+}
+.hero-inner { max-width: 800px; margin: 0 auto; }
+.eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+.hero h1 {
+  color: var(--white);
+  font-size: 40px;
+  margin: 16px 0 20px;
+}
+.hero .lead { font-size: 18px; line-height: 1.5; color: var(--ash); margin: 0 0 16px; }
+.hero .meta { font-size: 14px; color: var(--fog); margin: 0; }
+.hero mark { background: var(--glacier); color: var(--obsidian); padding: 0 4px; }
+
+.index-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.index-list a {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  text-decoration: none;
+  color: var(--black);
+}
+.index-list a:hover { border-color: var(--black); background: var(--paper); }
+.index-list .num {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--badge);
+  min-width: 24px;
+}
+.index-list .name { font-size: 16px; font-weight: 500; }
+
+/* ---------- Подвал ---------- */
+
+.footer {
+  background: var(--obsidian);
+  color: var(--fog);
+  font-size: 14px;
+  padding: 32px 16px;
+  margin-top: 80px;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer strong { color: var(--white); font-weight: 500; }
+
+/* ---------- Адаптив ---------- */
+
+@media (max-width: 1279px) {
+  .toc-rail { display: none; }
+  .toc-inline { display: block; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .card { padding: 24px 20px 32px; }
+  h1 { font-size: 26px; margin-bottom: 24px; }
+  h2 { font-size: 21px; }
+  h3 { font-size: 18px; }
+  .hero { padding: 48px 16px 40px; }
+  .hero h1 { font-size: 28px; }
+  .pager a { max-width: 100%; }
+  .pager { flex-direction: column; align-items: stretch; }
+}
+
+@media print {
+  .topbar, .toc-rail, .toc-inline, .pager { display: none; }
+  body { background: var(--white); font-size: 11.5pt; }
+  .page { padding: 0; max-width: none; }
+  .card { border: 0; padding: 0; max-width: none; }
+  blockquote, p.comment, table { break-inside: avoid; }
+}
